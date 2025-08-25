@@ -151,10 +151,10 @@ footer {
 </div>
 
 <form id="form">
-<input type="text" id="nama" placeholder="Nama" required>
-<input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
-<button type="button" onclick="tambah('pemasukan')">Tambah Pemasukan</button>
-<button type="button" onclick="tambah('pengeluaran')">Tambah Pengeluaran</button>
+  <input type="text" id="nama" placeholder="Nama" required>
+  <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
+  <button type="button" onclick="tambah('pemasukan')">Tambah Pemasukan</button>
+  <button type="button" onclick="tambah('pengeluaran')">Tambah Pengeluaran</button>
 </form>
 
 <div id="catatan">✨ Catatan keuangan akan muncul di sini ✨</div>
@@ -169,10 +169,10 @@ footer {
 <canvas id="grafik" width="400" height="200"></canvas>
 
 <div class="btn-group">
-<button onclick="downloadPDF()">Download PDF</button>
-<button onclick="downloadExcel()">Download Excel</button>
-<button onclick="shareInstagram()">Bagikan ke Instagram</button>
-<button onclick="shareWhatsApp()">Bagikan WhatsApp</button>
+  <button onclick="downloadPDF()">Download PDF</button>
+  <button onclick="downloadExcel()">Download Excel</button>
+  <button onclick="shareInstagram()">Bagikan ke Instagram</button>
+  <button onclick="shareWhatsApp()">Bagikan WhatsApp</button>
 </div>
 </div>
 
@@ -192,35 +192,47 @@ let chart=new Chart(ctx,{
 });
 
 function tambah(tipe){
-  const ket=document.getElementById('nama').value;
-  const jum=parseInt(document.getElementById('jumlah').value);
-  if(!ket || isNaN(jum)) return;
-  data.push({ket,jum,tipe});
+  const nama=document.getElementById('nama').value.trim();
+  const jumlah=parseInt(document.getElementById('jumlah').value);
+
+  if(!nama || isNaN(jumlah)) {
+    alert("Isi nama dan jumlah dulu ya 💖");
+    return;
+  }
+
+  data.push({nama, jumlah, tipe});
   document.getElementById('form').reset();
   update();
 }
 
 function update(){
-  const body=document.getElementById('tabel-body'); body.innerHTML="";
+  const body=document.getElementById('tabel-body'); 
+  body.innerHTML="";
   let pemasukan=0, pengeluaran=0;
+
   data.forEach((d,i)=>{
-    if(d.tipe==="pemasukan") pemasukan+=d.jum; else pengeluaran+=d.jum;
+    if(d.tipe==="pemasukan") pemasukan+=d.jumlah; 
+    else pengeluaran+=d.jumlah;
+
     body.innerHTML+=`
     <tr>
-    <td contenteditable="${editingIndex===i}" onblur="inlineEdit(${i},'ket',this.innerText)">${d.ket}</td>
-    <td contenteditable="${editingIndex===i}" onblur="inlineEdit(${i},'jum',this.innerText)">Rp ${d.jum}</td>
-    <td>${d.tipe}</td>
-    <td>
-    ${editingIndex===i?'<button onclick="saveEdit('+i+')">Simpan</button>':'<button onclick="startEdit('+i+')">Edit</button>'}
-    <button onclick="hapusData(${i})">Hapus</button>
-    </td>
+      <td contenteditable="${editingIndex===i}" 
+          onblur="inlineEdit(${i},'nama',this.innerText)">${d.nama}</td>
+      <td contenteditable="${editingIndex===i}" 
+          onblur="inlineEdit(${i},'jumlah',this.innerText)">Rp ${d.jumlah}</td>
+      <td>${d.tipe}</td>
+      <td>
+        ${editingIndex===i?'<button onclick="saveEdit('+i+')">Simpan</button>':'<button onclick="startEdit('+i+')">Edit</button>'}
+        <button onclick="hapusData(${i})">Hapus</button>
+      </td>
     </tr>`;
   });
 
   const saldo=pemasukan-pengeluaran;
   document.getElementById('saldo').innerText=`Rp ${saldo} ${saldo>=0?'💖':'💔'}`;
 
-  chart.data.datasets[0].data=[pemasukan,pengeluaran]; chart.update();
+  chart.data.datasets[0].data=[pemasukan,pengeluaran]; 
+  chart.update();
 
   let catatan="";
   if(pemasukan>pengeluaran) catatan="💕 lebih rajin dan Jangan lupa ditabung ya sayangku 💕";
@@ -231,8 +243,12 @@ function update(){
 
 function startEdit(i){ editingIndex=i; update(); }
 function saveEdit(i){ editingIndex=null; update(); }
-function inlineEdit(i,field,value){ if(field==='jum'){value=parseInt(value.replace(/[^0-9]/g,''))||0;} data[i][field]=value; update();}
-function hapusData(i){ data.splice(i,1); update();}
+function inlineEdit(i,field,value){ 
+  if(field==='jumlah'){ value=parseInt(value.replace(/[^0-9]/g,''))||0; }
+  data[i][field]=value; 
+  update();
+}
+function hapusData(i){ data.splice(i,1); update(); }
 
 function downloadPDF(){
   const { jsPDF } = window.jspdf; 
@@ -240,7 +256,7 @@ function downloadPDF(){
   doc.setTextColor(231,84,128); 
   doc.text("Laporan Keuangan Pink 💖",20,20); 
   let y=30; 
-  data.forEach(d=>{doc.text(`${d.ket} - Rp ${d.jum} (${d.tipe})`,20,y); y+=10;}); 
+  data.forEach(d=>{doc.text(`${d.nama} - Rp ${d.jumlah} (${d.tipe})`,20,y); y+=10;}); 
   doc.save("laporan.pdf");
 }
 function downloadExcel(){
@@ -252,7 +268,7 @@ function downloadExcel(){
 function shareInstagram(){ alert("📸 Bagikan ke Instagram Story secara manual dengan upload screenshot ya sayangku 💕"); }
 function shareWhatsApp(){
   let text="💖 Laporan Keuangan Pink Cantik 💖\n";
-  data.forEach(d=>{text+=`${d.ket} - Rp ${d.jum} (${d.tipe})\n`;});
+  data.forEach(d=>{text+=`${d.nama} - Rp ${d.jumlah} (${d.tipe})\n`;});
   let url="https://wa.me/?text="+encodeURIComponent(text);
   window.open(url,"_blank");
 }
@@ -261,3 +277,4 @@ update();
 </script>
 </body>
 </html>
+perbaikan k

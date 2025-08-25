@@ -147,22 +147,21 @@ footer {
 </div>
 
 <div>
-    <div class="saldo-box" id="saldo-box">Saldo Keseluruhan: <span id="saldo">0</span></div>
-
+    <div class="saldo-box" id="saldo-box">Saldo Keseluruhan: <span id="saldo">Rp 0</span></div>
 </div>
 
 <form id="form">
-<input type="text" id="nama" placeholder="nama" required>
+<input type="text" id="nama" placeholder="Nama" required>
 <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
-<button type="submit" onclick="setTipe('pemasukan')">Tambah Pemasukan</button>
-<button type="submit" onclick="setTipe('pengeluaran')">Tambah Pengeluaran</button>
+<button type="button" onclick="tambah('pemasukan')">Tambah Pemasukan</button>
+<button type="button" onclick="tambah('pengeluaran')">Tambah Pengeluaran</button>
 </form>
 
 <div id="catatan">✨ Catatan keuangan akan muncul di sini ✨</div>
 
 <table>
 <thead>
-<tr><th>nama</th><th>Jumlah</th><th>Tipe</th><th>Aksi</th></tr>
+<tr><th>Nama</th><th>Jumlah</th><th>Tipe</th><th>Aksi</th></tr>
 </thead>
 <tbody id="tabel-body"></tbody>
 </table>
@@ -184,61 +183,72 @@ footer {
 <script>
 let data=[]; 
 let editingIndex=null;
-let currentTipe='pemasukan';
-
-function setTipe(tipe){ currentTipe=tipe; }
 
 const ctx=document.getElementById('grafik').getContext('2d');
 let chart=new Chart(ctx,{
     type:'bar',
     data:{labels:["Pemasukan","Pengeluaran"],datasets:[{label:'Keuangan',data:[0,0],backgroundColor:["#ff69b4","#e75480"]}]},
-    options:{plugins:{legend:{labels:{color:"#fff"}}}, scales:{x:{ticks:{color:"#e75480"}}, y:{ticks:{color:"#e75480"}}}}
+    options:{plugins:{legend:{labels:{color:"#e75480"}}}, scales:{x:{ticks:{color:"#e75480"}}, y:{ticks:{color:"#e75480"}}}}
 });
 
-document.getElementById('form').addEventListener('submit', function(e){
-e.preventDefault();
-const ket=document.getElementById('keterangan').value;
-const jum=parseInt(document.getElementById('jumlah').value);
-data.push({ket,jum,tipe:currentTipe});
-this.reset();
-update();
-});
+function tambah(tipe){
+  const ket=document.getElementById('nama').value;
+  const jum=parseInt(document.getElementById('jumlah').value);
+  if(!ket || isNaN(jum)) return;
+  data.push({ket,jum,tipe});
+  document.getElementById('form').reset();
+  update();
+}
 
 function update(){
-const body=document.getElementById('tabel-body'); body.innerHTML="";
-let pemasukan=0, pengeluaran=0;
-data.forEach((d,i)=>{
-if(d.tipe==="pemasukan") pemasukan+=d.jum; else pengeluaran+=d.jum;
-body.innerHTML+=`
-<tr>
-<td contenteditable="${editingIndex===i}" onblur="inlineEdit(${i},'ket',this.innerText)">${d.ket}</td>
-<td contenteditable="${editingIndex===i}" onblur="inlineEdit(${i},'jum',this.innerText)">Rp ${d.jum}</td>
-<td>${d.tipe}</td>
-<td>
-${editingIndex===i?'<button onclick="saveEdit('+i+')">Simpan</button>':'<button onclick="startEdit('+i+')">Edit</button>'}
-<button onclick="hapusData(${i})">Hapus</button>
-</td>
-</tr>`;
-});
+  const body=document.getElementById('tabel-body'); body.innerHTML="";
+  let pemasukan=0, pengeluaran=0;
+  data.forEach((d,i)=>{
+    if(d.tipe==="pemasukan") pemasukan+=d.jum; else pengeluaran+=d.jum;
+    body.innerHTML+=`
+    <tr>
+    <td contenteditable="${editingIndex===i}" onblur="inlineEdit(${i},'ket',this.innerText)">${d.ket}</td>
+    <td contenteditable="${editingIndex===i}" onblur="inlineEdit(${i},'jum',this.innerText)">Rp ${d.jum}</td>
+    <td>${d.tipe}</td>
+    <td>
+    ${editingIndex===i?'<button onclick="saveEdit('+i+')">Simpan</button>':'<button onclick="startEdit('+i+')">Edit</button>'}
+    <button onclick="hapusData(${i})">Hapus</button>
+    </td>
+    </tr>`;
+  });
 
-const saldo=pemasukan-pengeluaran;
-document.getElementById('saldo').innerText=`Rp ${saldo} ${saldo>=0?'💖':'💔'}`;
+  const saldo=pemasukan-pengeluaran;
+  document.getElementById('saldo').innerText=`Rp ${saldo} ${saldo>=0?'💖':'💔'}`;
 
-chart.data.datasets[0].data=[pemasukan,pengeluaran]; chart.update();
+  chart.data.datasets[0].data=[pemasukan,pengeluaran]; chart.update();
 
-let catatan="";
-if(pemasukan>pengeluaran) catatan="💕 lebih rajin dan Jangan lupa ditabung ya sayangku 💕";
-else if(pengeluaran>pemasukan) catatan="💔 boros banget cukup Lebih hemat ya sayangku 💔";
-else catatan="💗 okay pertahankan di larang banyak jajan 💗";
-document.getElementById('catatan').innerText=catatan;
+  let catatan="";
+  if(pemasukan>pengeluaran) catatan="💕 lebih rajin dan Jangan lupa ditabung ya sayangku 💕";
+  else if(pengeluaran>pemasukan) catatan="💔 boros banget cukup Lebih hemat ya sayangku 💔";
+  else catatan="💗 okay pertahankan di larang banyak jajan 💗";
+  document.getElementById('catatan').innerText=catatan;
 }
 
 function startEdit(i){ editingIndex=i; update(); }
 function saveEdit(i){ editingIndex=null; update(); }
 function inlineEdit(i,field,value){ if(field==='jum'){value=parseInt(value.replace(/[^0-9]/g,''))||0;} data[i][field]=value; update();}
 function hapusData(i){ data.splice(i,1); update();}
-function downloadPDF(){const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.setTextColor(231,84,128); doc.text("Laporan Keuangan Pink 💖",20,20); let y=30; data.forEach(d=>{doc.text(`${d.ket} - Rp ${d.jum} (${d.tipe})`,20,y); y+=10;}); doc.save("laporan.pdf");}
-function downloadExcel(){let ws=XLSX.utils.json_to_sheet(data); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Laporan"); XLSX.writeFile(wb,"laporan.xlsx");}
+
+function downloadPDF(){
+  const { jsPDF } = window.jspdf; 
+  const doc = new jsPDF(); 
+  doc.setTextColor(231,84,128); 
+  doc.text("Laporan Keuangan Pink 💖",20,20); 
+  let y=30; 
+  data.forEach(d=>{doc.text(`${d.ket} - Rp ${d.jum} (${d.tipe})`,20,y); y+=10;}); 
+  doc.save("laporan.pdf");
+}
+function downloadExcel(){
+  let ws=XLSX.utils.json_to_sheet(data); 
+  let wb=XLSX.utils.book_new(); 
+  XLSX.utils.book_append_sheet(wb,ws,"Laporan"); 
+  XLSX.writeFile(wb,"laporan.xlsx");
+}
 function shareInstagram(){ alert("📸 Bagikan ke Instagram Story secara manual dengan upload screenshot ya sayangku 💕"); }
 function shareWhatsApp(){
   let text="💖 Laporan Keuangan Pink Cantik 💖\n";

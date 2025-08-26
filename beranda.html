@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Sweet Wallet Compact 💖</title>
+<title>💖 Sweet Wallet Mobile 💖</title>
 
 <!-- Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -14,45 +14,181 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
 
-body {font-family:'Poppins',sans-serif;background:#ffe6f2;margin:0;padding:0;text-align:center;color:#333;}
-h1 {font-family:'Pacifico',cursive;color:#e75480;font-size:1.6em;margin:12px 0;}
-.container {max-width:360px;margin:auto;background:#fff;border-radius:15px;padding:10px;box-shadow:0 4px 12px rgba(231,84,128,0.3);}
+body {
+  font-family:'Poppins',sans-serif;
+  background:#ffe6f2;
+  margin:0;
+  padding:0;
+  color:#333;
+  text-align:center;
+}
 
-form {display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:10px;}
-input {padding:5px 8px;border-radius:8px;border:1px solid #e75480;font-size:12px;min-width:100px;}
-button {padding:4px 8px;border-radius:8px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;font-size:12px;}
-button:hover {transform:scale(1.05);background:linear-gradient(45deg,#e75480,#ff69b4);}
+h1 {
+  font-family:'Pacifico',cursive;
+  color:#e75480;
+  font-size:1.8em;
+  margin:12px 0;
+}
+
+.container {
+  max-width:400px;
+  margin:auto;
+  background:#fff;
+  border-radius:15px;
+  padding:12px;
+  box-shadow:0 4px 12px rgba(231,84,128,0.3);
+}
+
+form {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+input {
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #e75480;
+  font-size:14px;
+}
+
+button {
+  padding:6px;
+  border-radius:8px;
+  border:none;
+  background:linear-gradient(45deg,#ff69b4,#e75480);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+  font-size:14px;
+}
+
+button:hover {
+  transform:scale(1.05);
+  background:linear-gradient(45deg,#e75480,#ff69b4);
+}
 
 /* Ringkasan */
-.summary {display:flex;justify-content:space-around;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
-.summary-box {flex:1;min-width:120px;background:#ffe4e1;color:#e75480;border-radius:10px;padding:5px;font-size:11px;font-weight:bold;box-shadow:0 2px 5px rgba(231,84,128,0.4);}
+.summary {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.summary-box {
+  background:#ffe4e1;
+  color:#e75480;
+  border-radius:10px;
+  padding:6px;
+  font-size:12px;
+  font-weight:bold;
+  box-shadow:0 2px 5px rgba(231,84,128,0.4);
+}
 
 /* Grafik & Tabel */
-.section-container {display:flex;gap:8px;flex-direction:column;margin-bottom:10px;}
-.section-box {flex:1;background:#fff0f7;border-radius:10px;padding:8px;box-shadow:0 2px 5px rgba(231,84,128,0.2);}
-.table-wrapper {width:100%;overflow-x:auto;}
-table {width:100%;border-collapse:collapse;margin-top:3px;font-size:10px;}
-th,td {padding:3px;text-align:center;}
-th {background:#ff69b4;color:#fff;}
-tr:nth-child(even){background:#ffe6f2;}
+.section-container {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:10px;
+}
 
-canvas {width:100%!important;height:120px!important;margin-top:3px;}
+.section-box {
+  background:#fff0f7;
+  border-radius:10px;
+  padding:8px;
+  box-shadow:0 2px 5px rgba(231,84,128,0.2);
+}
+
+.table-wrapper {
+  width:100%;
+  overflow-x:auto;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:11px;
+}
+
+th,td {
+  padding:4px;
+  text-align:center;
+}
+
+th {
+  background:#ff69b4;
+  color:#fff;
+}
+
+tr:nth-child(even){
+  background:#ffe6f2;
+}
+
+canvas {
+  width:100%!important;
+  height:150px!important;
+}
 
 /* Tombol Ekspor */
-.btn-group {margin-top:5px;display:flex;flex-wrap:wrap;justify-content:center;gap:3px;}
-.btn-group button {background:#ffb6c1;color:#fff;font-size:11px;padding:3px 6px;}
-.btn-group button.shareimage {background:#8b0000;}
+.btn-group {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:4px;
+  margin-top:5px;
+}
+
+.btn-group button {
+  font-size:12px;
+  padding:5px 8px;
+}
+
+.btn-group button.shareimage {
+  background:#8b0000;
+}
 
 /* Tombol Aksi di tabel */
-.tabel-btn {padding:2px 5px;border:none;border-radius:12px;margin:1px;font-size:9px;cursor:pointer;font-weight:bold;transition:0.3s;}
+.tabel-btn {
+  padding:3px 6px;
+  border:none;
+  border-radius:12px;
+  margin:1px;
+  font-size:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
 .tabel-btn.edit {background:#ff69b4;color:#fff;}
 .tabel-btn.hapus {background:#ffb6c1;color:#fff;}
 .tabel-btn.edit:hover,.tabel-btn.hapus:hover {background:#e75480;}
 
 /* Tombol Kuisioner */
-.kuisioner-btn {margin-top:8px;padding:6px 10px;border-radius:8px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;font-size:12px;}
+.kuisioner-btn {
+  margin-top:8px;
+  padding:6px 10px;
+  border-radius:8px;
+  border:none;
+  background:linear-gradient(45deg,#ff69b4,#e75480);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+}
 
-footer {background:#ff69b4;color:#fff;padding:8px;font-family:'Pacifico',cursive;font-size:12px;margin-top:15px;border-radius:12px 12px 0 0;}
+/* Footer */
+footer {
+  background:#ff69b4;
+  color:#fff;
+  padding:10px;
+  font-family:'Pacifico',cursive;
+  font-size:12px;
+  margin-top:15px;
+  border-radius:12px 12px 0 0;
+}
 
 /* Notifikasi Copy Link */
 #notif {
@@ -73,15 +209,14 @@ footer {background:#ff69b4;color:#fff;padding:8px;font-family:'Pacifico',cursive
   transition:opacity 0.5s;
 }
 
-/* Responsive ultra compact */
-@media(max-width:360px){
-  h1 {font-size:1.4em;}
-  input,button,.kuisioner-btn {width:88%;font-size:11px;padding:4px 6px;}
-  .summary-box {font-size:10px;padding:4px;}
-  table,th,td {font-size:9px;padding:2px;min-width:100%;}
-  canvas {height:100px!important;}
-  .btn-group button {font-size:10px;padding:2px 4px;}
-  .tabel-btn {font-size:8px;padding:2px 4px;}
+/* Mobile responsiveness */
+@media(max-width:420px){
+  .container {padding:10px;}
+  h1 {font-size:1.6em;}
+  input,button,.kuisioner-btn {width:100%; font-size:13px; padding:6px;}
+  .summary-box {font-size:11px;}
+  table,th,td {font-size:10px; padding:3px;}
+  canvas {height:120px!important;}
 }
 </style>
 </head>

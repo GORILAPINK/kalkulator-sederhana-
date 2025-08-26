@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Aplikasi Keuangan Pink Cantik 💖</title>
+<title>💖 Sweet Wallet Compact 💖</title>
 
 <!-- Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -11,59 +11,77 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-<!-- Style -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
 
 body {font-family:'Poppins',sans-serif;background:#ffe6f2;margin:0;padding:0;text-align:center;color:#333;}
-h1 {font-family:'Pacifico',cursive;color:#e75480;font-size:1.8em;margin:15px 0;}
-.container {max-width:400px;margin:auto;background:#fff;border-radius:20px;padding:15px;box-shadow:0 5px 15px rgba(231,84,128,0.3);}
+h1 {font-family:'Pacifico',cursive;color:#e75480;font-size:1.6em;margin:12px 0;}
+.container {max-width:360px;margin:auto;background:#fff;border-radius:15px;padding:10px;box-shadow:0 4px 12px rgba(231,84,128,0.3);}
 
-form {display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:15px;}
-input {padding:6px 10px;border-radius:10px;border:1px solid #e75480;font-size:14px;min-width:120px;}
-button {padding:6px 12px;border-radius:10px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;font-size:13px;}
+form {display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:10px;}
+input {padding:5px 8px;border-radius:8px;border:1px solid #e75480;font-size:12px;min-width:100px;}
+button {padding:4px 8px;border-radius:8px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;font-size:12px;}
 button:hover {transform:scale(1.05);background:linear-gradient(45deg,#e75480,#ff69b4);}
 
 /* Ringkasan */
-.summary {display:flex;justify-content:space-around;flex-wrap:wrap;gap:5px;margin-bottom:15px;}
-.summary-box {flex:1;min-width:150px;background:#ffe4e1;color:#e75480;border-radius:12px;padding:8px;font-size:13px;font-weight:bold;box-shadow:0 3px 7px rgba(231,84,128,0.4);}
+.summary {display:flex;justify-content:space-around;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.summary-box {flex:1;min-width:120px;background:#ffe4e1;color:#e75480;border-radius:10px;padding:5px;font-size:11px;font-weight:bold;box-shadow:0 2px 5px rgba(231,84,128,0.4);}
 
 /* Grafik & Tabel */
-.section-container {display:flex;gap:10px;flex-direction:column;margin-bottom:15px;}
-.section-box {flex:1;background:#fff0f7;border-radius:12px;padding:10px;box-shadow:0 3px 7px rgba(231,84,128,0.2);}
+.section-container {display:flex;gap:8px;flex-direction:column;margin-bottom:10px;}
+.section-box {flex:1;background:#fff0f7;border-radius:10px;padding:8px;box-shadow:0 2px 5px rgba(231,84,128,0.2);}
 .table-wrapper {width:100%;overflow-x:auto;}
-table {width:100%;border-collapse:collapse;margin-top:5px;font-size:12px;}
-th,td {padding:5px;text-align:center;}
+table {width:100%;border-collapse:collapse;margin-top:3px;font-size:10px;}
+th,td {padding:3px;text-align:center;}
 th {background:#ff69b4;color:#fff;}
 tr:nth-child(even){background:#ffe6f2;}
 
-canvas {width:100%!important;height:150px!important;margin-top:5px;}
+canvas {width:100%!important;height:120px!important;margin-top:3px;}
 
-/* Tombol bawah */
-.btn-group {margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:5px;}
-.btn-group button {background:#ffb6c1;color:#fff;font-size:12px;padding:5px 10px;}
+/* Tombol Ekspor */
+.btn-group {margin-top:5px;display:flex;flex-wrap:wrap;justify-content:center;gap:3px;}
+.btn-group button {background:#ffb6c1;color:#fff;font-size:11px;padding:3px 6px;}
 .btn-group button.shareimage {background:#8b0000;}
 
 /* Tombol Aksi di tabel */
-.tabel-btn {padding:4px 8px;border:none;border-radius:15px;margin:1px;font-size:11px;cursor:pointer;font-weight:bold;transition:0.3s;}
+.tabel-btn {padding:2px 5px;border:none;border-radius:12px;margin:1px;font-size:9px;cursor:pointer;font-weight:bold;transition:0.3s;}
 .tabel-btn.edit {background:#ff69b4;color:#fff;}
 .tabel-btn.hapus {background:#ffb6c1;color:#fff;}
 .tabel-btn.edit:hover,.tabel-btn.hapus:hover {background:#e75480;}
 
-footer {background:#ff69b4;color:#fff;padding:10px;font-family:'Pacifico',cursive;font-size:14px;margin-top:20px;border-radius:15px 15px 0 0;}
-
 /* Tombol Kuisioner */
-.kuisioner-btn {margin-top:10px;padding:8px 15px;border-radius:10px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;font-size:14px;}
+.kuisioner-btn {margin-top:8px;padding:6px 10px;border-radius:8px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;font-size:12px;}
 
-/* Responsive super compact */
-@media(max-width:400px){
-  h1 {font-size:1.5em;}
-  input,button,.kuisioner-btn {width:90%;font-size:12px;padding:5px 10px;}
-  .summary-box {font-size:12px;padding:6px;}
-  table,th,td {font-size:10px;padding:4px;min-width:100%;}
-  canvas {height:120px!important;}
-  .btn-group button {font-size:11px;padding:4px 8px;}
-  .tabel-btn {font-size:9px;padding:3px 6px;}
+footer {background:#ff69b4;color:#fff;padding:8px;font-family:'Pacifico',cursive;font-size:12px;margin-top:15px;border-radius:12px 12px 0 0;}
+
+/* Notifikasi Copy Link */
+#notif {
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff69b4;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:12px;
+  font-weight:bold;
+  display:none;
+  z-index:9999;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  font-size:12px;
+  opacity:0;
+  transition:opacity 0.5s;
+}
+
+/* Responsive ultra compact */
+@media(max-width:360px){
+  h1 {font-size:1.4em;}
+  input,button,.kuisioner-btn {width:88%;font-size:11px;padding:4px 6px;}
+  .summary-box {font-size:10px;padding:4px;}
+  table,th,td {font-size:9px;padding:2px;min-width:100%;}
+  canvas {height:100px!important;}
+  .btn-group button {font-size:10px;padding:2px 4px;}
+  .tabel-btn {font-size:8px;padding:2px 4px;}
 }
 </style>
 </head>
@@ -85,13 +103,13 @@ footer {background:#ff69b4;color:#fff;padding:10px;font-family:'Pacifico',cursiv
     <div class="summary-box">💵 Pemasukan: <span id="totalPemasukan">Rp 0</span></div>
     <div class="summary-box">💸 Pengeluaran: <span id="totalPengeluaran">Rp 0</span></div>
     <div class="summary-box">💰 Sisa: <span id="uangSisa">Rp 0</span></div>
-    <div class="summary-box">🏦 Tabungan Premium <br><button onclick="window.location.href='tabungan.html'">Rencana 💖</button></div>
+    <div class="summary-box">🏦 Tabungan <br><button onclick="window.location.href='tabungan.html'">Rencana 💖</button></div>
   </div>
 
   <!-- Grafik & Tabel -->
   <div class="section-container">
     <div class="section-box">
-      <div id="catatan" style="font-weight:600;color:#e75480;margin-bottom:5px;"></div>
+      <div id="catatan" style="font-weight:600;color:#e75480;margin-bottom:3px;"></div>
       <canvas id="grafik"></canvas>
     </div>
     <div class="section-box">
@@ -109,7 +127,7 @@ footer {background:#ff69b4;color:#fff;padding:10px;font-family:'Pacifico',cursiv
   </div>
 
   <!-- Tombol Kuisioner -->
-  <button class="kuisioner-btn" onclick="window.open('https://link-kuisioner-anda.com','_blank')">💖 Kasih Rating 💖</button>
+  <button class="kuisioner-btn" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSc2_TTHKmhutEuDpJVEV6MGPZ3cnZEZYGtFB6_d_fym86uCKg/viewform?usp=header')">💖 Kasih Rating 💖</button>
 
   <!-- Tombol Ekspor -->
   <div class="btn-group">
@@ -120,12 +138,15 @@ footer {background:#ff69b4;color:#fff;padding:10px;font-family:'Pacifico',cursiv
   </div>
 
   <!-- Tombol keluar -->
-  <div style="margin-top:10px;">
+  <div style="margin-top:8px;">
     <button type="button" onclick="window.location.href='index.html'">🚪 Keluar</button>
   </div>
 </div>
 
-<footer>💖 Aplikasi Keuangan Pink Cantik - Laporan lebih manis 💖</footer>
+<!-- Notifikasi Copy -->
+<div id="notif">Link berhasil disalin 💖</div>
+
+<footer>💖 Sweet Wallet Compact 💖</footer>
 
 <script>
 let data=[];
@@ -141,7 +162,7 @@ function formatRupiah(angka){return "Rp "+angka.toLocaleString("id-ID");}
 function tambah(tipe){
   const nama=document.getElementById('nama').value.trim();
   const jumlah=parseInt(document.getElementById('jumlah').value);
-  if(!nama||isNaN(jumlah)){alert("Isi nama dan jumlah dulu ya 💖");return;}
+  if(!nama||isNaN(jumlah)){alert("Isi nama dan jumlah dulu ya sayangku💖");return;}
   data.push({nama,jumlah,tipe});
   document.getElementById('form').reset();
   update();
@@ -149,7 +170,7 @@ function tambah(tipe){
 
 function update(){
   const body=document.getElementById('tabel-body');body.innerHTML="";
-  let saldo=0,pemasukan=0,pengeluaran=0;
+  let pemasukan=0,pengeluaran=0;
   data.forEach((d,i)=>{
     if(d.tipe==="pemasukan") pemasukan+=d.jumlah; else pengeluaran+=d.jumlah;
     body.innerHTML+=`
@@ -173,7 +194,7 @@ function update(){
   chart.data.datasets[0].data=data.map((d,i)=>data.slice(0,i+1).reduce((sum,v)=>sum+(v.tipe==="pemasukan"?v.jumlah:-v.jumlah),0));
   chart.update();
 
-  document.getElementById('catatan').innerText=pemasukan>pengeluaran?"💕 Jangan lupa ditabung 💕":(pengeluaran>pemasukan?"💔 Lebih hemat 💔":"💗 Pertahankan 💗");
+  document.getElementById('catatan').innerText=pemasukan>pengeluaran?"💕 Jangan lupa di tabung sayangku💕":(pengeluaran>pemasukan?"💔 boros banget sih sayang x💔":"💗 tolong diprhatikan 💗");
 }
 
 function editRow(btn,index){
@@ -195,7 +216,7 @@ function editRow(btn,index){
     const nama=namaCell.innerText.trim();
     const jumlah=parseInt(jumlahCell.innerText.replace(/[^0-9]/g,""));
     const tipe=tipeCell.querySelector("select").value;
-    if(!nama||isNaN(jumlah)){alert("Isi data valid 💖");return;}
+    if(!nama||isNaN(jumlah)){alert("Isi datanya yang valid dong sayang 💖");return;}
     data[index]={nama,jumlah,tipe};
     update();
     btn.innerText="Edit";btn.style.background="#ff69b4";
@@ -208,7 +229,7 @@ function downloadPDF(){
   const {jsPDF}=window.jspdf;const doc=new jsPDF();
   doc.setTextColor(231,84,128);doc.text("Laporan Keuangan 💖",10,10);
   let y=20;
-  data.forEach((d,i)=>{doc.text(`${i+1}. ${d.nama} - ${formatRupiah(d.jumlah)} (${d.tipe})`,10,y);y+=7;});
+  data.forEach((d,i)=>{doc.text(`${i+1}. ${d.nama} - ${formatRupiah(d.jumlah)} (${d.tipe})`,10,y);y+=6;});
   doc.save("laporan.pdf");
 }
 
@@ -217,7 +238,19 @@ function downloadExcel(){
   let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Laporan");XLSX.writeFile(wb,"laporan.xlsx");
 }
 
-function copyLink(){navigator.clipboard.writeText(window.location.href).then(()=>alert("Link berhasil disalin 💖"));}
+// Copy Link dengan popup custom
+function copyLink(){
+  navigator.clipboard.writeText(window.location.href).then(()=>{
+    const notif=document.getElementById('notif');
+    notif.style.display="block";
+    notif.style.opacity="1";
+    setTimeout(()=>{
+      notif.style.opacity="0";
+      setTimeout(()=>{notif.style.display="none";},500);
+    },2000);
+  });
+}
+
 function saveAsImage(){html2canvas(document.getElementById('mainContainer')).then(c=>{const link=document.createElement('a');link.href=c.toDataURL("image/png");link.download="laporan.png";link.click();});}
 
 update();

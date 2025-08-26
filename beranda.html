@@ -4,223 +4,223 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>💖 Aplikasi Keuangan Pink Cantik 💖</title>
+
+<!-- Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
+<!-- Style -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
 
-body { font-family:'Poppins',sans-serif; background:#ffe6f2; margin:0; padding:0; text-align:center; color:#333; }
-h1 { font-family:'Pacifico',cursive; color:#e75480; font-size:2.8em; margin:20px 0; }
-.container { max-width:950px; margin:auto; background:#fff; border-radius:25px; padding:25px; box-shadow:0 8px 20px rgba(231,84,128,0.3); }
+body {font-family:'Poppins',sans-serif;background:#ffe6f2;margin:0;padding:0;text-align:center;color:#333;}
+h1 {font-family:'Pacifico',cursive;color:#e75480;font-size:2.5em;margin:20px 0;}
+.container {max-width:950px;margin:auto;background:#fff;border-radius:25px;padding:25px;box-shadow:0 8px 20px rgba(231,84,128,0.3);}
 
-form { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:20px; }
-input { padding:12px 15px; border-radius:12px; border:1px solid #e75480; font-size:16px; min-width:150px; }
-button { padding:12px 20px; border-radius:12px; border:none; background:linear-gradient(45deg,#ff69b4,#e75480); color:#fff; font-weight:bold; cursor:pointer; transition:all 0.3s ease; }
-button:hover { transform:scale(1.05); background:linear-gradient(45deg,#e75480,#ff69b4); }
+form {display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:20px;}
+input {padding:10px 15px;border-radius:12px;border:1px solid #e75480;font-size:16px;min-width:150px;}
+button {padding:10px 20px;border-radius:12px;border:none;background:linear-gradient(45deg,#ff69b4,#e75480);color:#fff;font-weight:bold;cursor:pointer;transition:.3s;}
+button:hover {transform:scale(1.05);background:linear-gradient(45deg,#e75480,#ff69b4);}
 
-.summary { display:flex; justify-content:space-around; flex-wrap:wrap; gap:10px; margin-bottom:20px; }
-.summary-box { flex:1; min-width:200px; background:#ffe4e1; color:#e75480; border-radius:15px; padding:15px; font-size:18px; font-weight:bold; box-shadow:0 4px 10px rgba(231,84,128,0.4); }
+/* Ringkasan */
+.summary {display:flex;justify-content:space-around;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.summary-box {flex:1;min-width:200px;background:#ffe4e1;color:#e75480;border-radius:15px;padding:15px;font-size:16px;font-weight:bold;box-shadow:0 4px 10px rgba(231,84,128,0.4);}
 
-.section-container { display:flex; gap:15px; flex-wrap:wrap; margin-bottom:20px; }
-.section-box { flex:1; min-width:300px; background:#fff0f7; border-radius:15px; padding:15px; box-shadow:0 4px 10px rgba(231,84,128,0.2); }
+/* Grafik & Tabel */
+.section-container {display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px;}
+.section-box {flex:1;min-width:300px;background:#fff0f7;border-radius:15px;padding:15px;box-shadow:0 4px 10px rgba(231,84,128,0.2);}
+.table-wrapper {width:100%;overflow-x:auto;}
+table {width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;min-width:600px;}
+th,td {padding:8px;text-align:center;}
+th {background:#ff69b4;color:#fff;}
+tr:nth-child(even){background:#ffe6f2;}
 
-table { width:100%; border-collapse:collapse; border-radius:15px; overflow:hidden; margin-top:10px; font-size:14px; }
-th, td { padding:10px; text-align:center; }
-th { background:#ff69b4; color:#fff; font-size:14px; }
-tr:nth-child(even) { background:#ffe6f2; }
+canvas {width:100%!important;height:250px!important;margin-top:10px;}
 
-canvas { width:100%; height:250px; margin-top:10px; }
+/* Tombol bawah */
+.btn-group {margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.btn-group button {background:#ffb6c1;color:#fff;}
+.btn-group button.shareimage {background:#8b0000;}
 
-.btn-group { margin-top:10px; display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
-.btn-group button.pdfexcel { background:#ffb6c1; }
-.btn-group button.shareimage { background:#8b0000; color:#fff; }
+footer {background:#ff69b4;color:#fff;padding:15px;font-family:'Pacifico',cursive;font-size:16px;margin-top:30px;border-radius:15px 15px 0 0;}
 
-footer { background:#ff69b4; color:#fff; padding:15px; font-family:'Pacifico',cursive; font-size:18px; margin-top:30px; border-radius:15px 15px 0 0; }
+/* Tombol Aksi di tabel */
+.tabel-btn {padding:6px 12px;border:none;border-radius:20px;margin:2px;font-size:12px;cursor:pointer;font-weight:bold;transition:0.3s;}
+.tabel-btn.edit {background:#ff69b4;color:#fff;}
+.tabel-btn.hapus {background:#ffb6c1;color:#fff;}
+.tabel-btn.edit:hover,.tabel-btn.hapus:hover {background:#e75480;}
 
-/* Tombol aksi di tabel dengan efek tabung */
-.tabel-btn { 
-    padding:8px 14px; 
-    border:none; 
-    border-radius:20px; 
-    margin:2px; 
-    font-size:12px; 
-    cursor:pointer; 
-    font-weight:bold; 
-    transition:0.3s; 
-    box-shadow:0 2px 5px rgba(0,0,0,0.2);
-}
-.tabel-btn.edit { background:#ff69b4; color:#fff; }
-.tabel-btn.edit:hover { background:#e75480; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
-.tabel-btn.hapus { background:#ffb6c1; color:#fff; }
-.tabel-btn.hapus:hover { background:#e75480; box-shadow:0 4px 8px rgba(0,0,0,0.3); }
-
-@media(max-width:768px) {
-  .section-container { flex-direction:column; gap:15px; }
-  .summary { flex-direction:column; gap:15px; }
-  .summary-box { width:90%; margin:auto; font-size:16px; }
-  input, button { width:90%; font-size:16px; }
-  table, th, td { font-size:12px; }
-  canvas { height:200px; }
+@media(max-width:768px){
+  .section-container {flex-direction:column;}
+  .summary {flex-direction:column;gap:10px;}
+  .summary-box {width:90%;margin:auto;}
+  input,button {width:90%;font-size:14px;}
+  table,th,td {font-size:12px;}
+  canvas {height:200px!important;}
 }
 </style>
 </head>
 
 <body>
 <div class="container" id="mainContainer">
-    <h1>💖 Sweet Wallet 💖</h1>
+  <h1>💖 Sweet Wallet 💖</h1>
 
-    <form id="form">
-        <input type="text" id="nama" placeholder="Nama Transaksi" required>
-        <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
-        <button type="button" onclick="tambah('pemasukan')">+ Pemasukan</button>
-        <button type="button" onclick="tambah('pengeluaran')">- Pengeluaran</button>
-    </form>
+  <!-- Form Input -->
+  <form id="form">
+    <input type="text" id="nama" placeholder="Nama Transaksi" required>
+    <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
+    <button type="button" onclick="tambah('pemasukan')">+ Pemasukan</button>
+    <button type="button" onclick="tambah('pengeluaran')">- Pengeluaran</button>
+  </form>
 
-    <div class="summary">
-        <div class="summary-box">💵 Total Pemasukan: <span id="totalPemasukan">Rp 0</span></div>
-        <div class="summary-box">💸 Total Pengeluaran: <span id="totalPengeluaran">Rp 0</span></div>
-        <div class="summary-box">💰 Uang Sisa: <span id="uangSisa">Rp 0</span></div>
-        <div class="summary-box">
-            🏦 Tabungan (Premium)<br>
-            <button onclick="window.location.href='tabungan.html'">Rencana Menabung 💖</button>
-        </div>
+  <!-- Ringkasan -->
+  <div class="summary">
+    <div class="summary-box">💵 Pemasukan: <span id="totalPemasukan">Rp 0</span></div>
+    <div class="summary-box">💸 Pengeluaran: <span id="totalPengeluaran">Rp 0</span></div>
+    <div class="summary-box">💰 Sisa: <span id="uangSisa">Rp 0</span></div>
+    <div class="summary-box">🏦 Tabungan Premium <br><button onclick="window.location.href='tabungan.html'">Rencana 💖</button></div>
+  </div>
+
+  <!-- Grafik & Tabel -->
+  <div class="section-container">
+    <div class="section-box">
+      <div id="catatan" style="font-weight:600;color:#e75480;margin-bottom:10px;"></div>
+      <canvas id="grafik"></canvas>
     </div>
-
-    <div class="section-container">
-        <div class="section-box">
-            <div id="catatan" style="font-weight:600; color:#e75480; margin-bottom:10px;"></div>
-            <canvas id="grafik"></canvas>
-        </div>
-
-        <div class="section-box">
-            <table>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Jumlah</th>
-                        <th>Tipe</th>
-                        <th>Saldo Berjalan</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="tabel-body"></tbody>
-            </table>
-        </div>
+    <div class="section-box">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th><th>Nama</th><th>Jumlah</th><th>Tipe</th><th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tabel-body"></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <div class="btn-group">
-        <button class="pdfexcel" onclick="downloadPDF()">📄 Download PDF</button>
-        <button class="pdfexcel" onclick="downloadExcel()">📊 Download Excel</button>
-        <button class="shareimage" onclick="copyLink()">🔗 Copy Link</button>
-        <button class="shareimage" onclick="saveAsImage()">🖼️ Simpan Sebagai Gambar</button>
-    </div>
+  <!-- Tombol Ekspor -->
+  <div class="btn-group">
+    <button onclick="downloadPDF()">📄 PDF</button>
+    <button onclick="downloadExcel()">📊 Excel</button>
+    <button class="shareimage" onclick="copyLink()">🔗 Copy Link</button>
+    <button class="shareimage" onclick="saveAsImage()">🖼️ Simpan Gambar</button>
+  </div>
 
-    <div style="margin-top:10px;">
-      <button type="button" onclick="window.location.href='landing.html'">Keluar</button>
-    </div>
-    
+  <!-- Tombol Kuisioner -->
+  <div style="margin-top:15px;">
+    <button onclick="window.open('https://link-kuisioner-anda.com', '_blank')"
+            style="padding:10px 20px;border-radius:12px;border:none;
+                   background:linear-gradient(45deg,#ff69b4,#e75480);
+                   color:#fff;font-weight:bold;cursor:pointer;transition:.3s;">
+      💖 Kasih Rating 💖
+    </button>
+  </div>
+
+  <!-- Tombol keluar -->
+  <div style="margin-top:15px;">
+    <button type="button" onclick="window.location.href='index.html'">🚪 Keluar</button>
+  </div>
 </div>
 
-<footer>💖 Aplikasi Keuangan Pink Cantik - Buat laporan keuanganmu lebih manis 💖</footer>
+<footer>💖 Aplikasi Keuangan Pink Cantik - Laporan lebih manis 💖</footer>
 
+<!-- Script -->
 <script>
 let data=[];
 const ctx=document.getElementById('grafik').getContext('2d');
-let chart=new Chart(ctx,{ type:'line', data:{labels:[], datasets:[{label:'Saldo Berjalan', data:[], borderColor:"#e75480", fill:false}]}, options:{plugins:{legend:{labels:{color:"#e75480"}}}} });
+let chart=new Chart(ctx,{
+  type:'line',
+  data:{labels:[],datasets:[{label:'Saldo Berjalan',data:[],borderColor:"#e75480",fill:false}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#e75480"}}}}
+});
 
-function formatRupiah(angka){ return "Rp "+angka.toLocaleString("id-ID"); }
+function formatRupiah(angka){return "Rp "+angka.toLocaleString("id-ID");}
 
 function tambah(tipe){
-    const nama=document.getElementById('nama').value.trim();
-    const jumlah=parseInt(document.getElementById('jumlah').value);
-    if(!nama||isNaN(jumlah)){ alert("Isi nama dan jumlah dulu ya 💖"); return; }
-    data.push({nama,jumlah,tipe});
-    document.getElementById('form').reset();
-    update();
+  const nama=document.getElementById('nama').value.trim();
+  const jumlah=parseInt(document.getElementById('jumlah').value);
+  if(!nama||isNaN(jumlah)){alert("Isi nama dan jumlah dulu ya 💖");return;}
+  data.push({nama,jumlah,tipe});
+  document.getElementById('form').reset();
+  update();
 }
 
 function update(){
-    const body=document.getElementById('tabel-body');
-    body.innerHTML="";
-    let saldo=0,pemasukan=0,pengeluaran=0;
-    let saldoArray=[];
-    data.forEach((d,i)=>{
-        saldo += (d.tipe==="pemasukan"?d.jumlah:-d.jumlah);
-        saldoArray.push(saldo);
-        if(d.tipe==="pemasukan") pemasukan+=d.jumlah; else pengeluaran+=d.jumlah;
-        body.innerHTML+=`
-<tr>
-<td>${i+1}</td>
-<td contenteditable="false" class="editable nama">${d.nama}</td>
-<td contenteditable="false" class="editable jumlah">${d.jumlah}</td>
-<td>${d.tipe}</td>
-<td>${formatRupiah(saldo)}</td>
-<td>
-<button class="tabel-btn edit" onclick="editRow(this,${i})">Edit</button>
-<button class="tabel-btn hapus" onclick="hapusData(${i})">Hapus</button>
-</td>
-</tr>`;
-    });
-    document.getElementById('totalPemasukan').innerText=formatRupiah(pemasukan);
-    document.getElementById('totalPengeluaran').innerText=formatRupiah(pengeluaran);
-    document.getElementById('uangSisa').innerText=formatRupiah(saldo);
-    chart.data.labels=data.map((_,i)=>`T${i+1}`);
-    chart.data.datasets[0].data=saldoArray;
-    chart.update();
-    let catatan="";
-    if(pemasukan>pengeluaran) catatan="💕 Jangan lupa ditabung ya sayangku 💕";
-    else if(pengeluaran>pemasukan) catatan="💔 Lebih hemat ya sayangku 💔";
-    else catatan="💗 Pertahankan ya, jangan boros 💗";
-    document.getElementById('catatan').innerText=catatan;
+  const body=document.getElementById('tabel-body');body.innerHTML="";
+  let saldo=0,pemasukan=0,pengeluaran=0,saldoArray=[];
+  data.forEach((d,i)=>{
+    saldo+=(d.tipe==="pemasukan"?d.jumlah:-d.jumlah);
+    saldoArray.push(saldo);
+    if(d.tipe==="pemasukan") pemasukan+=d.jumlah; else pengeluaran+=d.jumlah;
+    body.innerHTML+=`
+      <tr>
+        <td>${i+1}</td>
+        <td class="nama">${d.nama}</td>
+        <td class="jumlah">${formatRupiah(d.jumlah)}</td>
+        <td class="tipe">${d.tipe}</td>
+        <td>
+          <button class="tabel-btn edit" onclick="editRow(this,${i})">Edit</button>
+          <button class="tabel-btn hapus" onclick="hapusData(${i})">Hapus</button>
+        </td>
+      </tr>`;
+  });
+  document.getElementById('totalPemasukan').innerText=formatRupiah(pemasukan);
+  document.getElementById('totalPengeluaran').innerText=formatRupiah(pengeluaran);
+  document.getElementById('uangSisa').innerText=formatRupiah(saldo);
+  chart.data.labels=data.map((_,i)=>`T${i+1}`);
+  chart.data.datasets[0].data=saldoArray;chart.update();
+  document.getElementById('catatan').innerText=pemasukan>pengeluaran?"💕 Jangan lupa ditabung 💕":(pengeluaran>pemasukan?"💔 Lebih hemat 💔":"💗 Pertahankan 💗");
 }
 
 function editRow(btn,index){
-    const row=btn.parentElement.parentElement;
-    const namaCell=row.querySelector(".nama");
-    const jumlahCell=row.querySelector(".jumlah");
-    if(btn.innerText==="Edit"){
-        namaCell.contentEditable="true";
-        jumlahCell.contentEditable="true";
-        namaCell.focus();
-        btn.innerText="Simpan";
-        btn.style.background="#32cd32";
-    } else {
-        const nama=namaCell.innerText.trim();
-        const jumlah=parseInt(jumlahCell.innerText);
-        if(!nama || isNaN(jumlah)){ alert("Isi nama dan jumlah valid"); return; }
-        data[index].nama=nama;
-        data[index].jumlah=jumlah;
-        update();
-    }
+  const row=btn.parentElement.parentElement;
+  const namaCell=row.querySelector(".nama");
+  const jumlahCell=row.querySelector(".jumlah");
+  const tipeCell=row.querySelector(".tipe");
+
+  if(btn.innerText==="Edit"){
+    namaCell.contentEditable="true";
+    jumlahCell.contentEditable="true";
+    const currentTipe=tipeCell.innerText;
+    tipeCell.innerHTML=`<select>
+      <option value="pemasukan" ${currentTipe==="pemasukan"?"selected":""}>pemasukan</option>
+      <option value="pengeluaran" ${currentTipe==="pengeluaran"?"selected":""}>pengeluaran</option>
+    </select>`;
+    btn.innerText="Simpan";btn.style.background="#32cd32";
+  } else {
+    const nama=namaCell.innerText.trim();
+    const jumlah=parseInt(jumlahCell.innerText.replace(/[^0-9]/g,""));
+    const tipe=tipeCell.querySelector("select").value;
+    if(!nama||isNaN(jumlah)){alert("Isi data valid 💖");return;}
+    data[index]={nama,jumlah,tipe};
+    update();
+    btn.innerText="Edit";btn.style.background="#ff69b4";
+  }
 }
 
-function hapusData(i){ data.splice(i,1); update(); }
+function hapusData(i){data.splice(i,1);update();}
 
 function downloadPDF(){
-    const { jsPDF }=window.jspdf;
-    const doc=new jsPDF();
-    doc.setTextColor(231,84,128);
-    doc.text("Laporan Keuangan Pink 💖",20,20);
-    let y=30,saldo=0;
-    data.forEach((d,i)=>{ saldo += (d.tipe==="pemasukan"?d.jumlah:-d.jumlah); doc.text(`${i+1}. ${d.nama} - ${formatRupiah(d.jumlah)} (${d.tipe}) | Saldo: ${formatRupiah(saldo)}`,20,y); y+=10; });
-    doc.save("laporan.pdf");
+  const {jsPDF}=window.jspdf;const doc=new jsPDF();
+  doc.setTextColor(231,84,128);doc.text("Laporan Keuangan 💖",20,20);
+  let y=30,saldo=0;
+  data.forEach((d,i)=>{saldo+=(d.tipe==="pemasukan"?d.jumlah:-d.jumlah);doc.text(`${i+1}. ${d.nama} - ${formatRupiah(d.jumlah)} (${d.tipe})`,20,y);y+=10;});
+  doc.save("laporan.pdf");
 }
 
 function downloadExcel(){
-    let saldo=0;
-    let ws=XLSX.utils.json_to_sheet(data.map((d,i)=>{ saldo += (d.tipe==="pemasukan"?d.jumlah:-d.jumlah); return {No:i+1, Nama:d.nama, Jumlah:formatRupiah(d.jumlah), Tipe:d.tipe, "Saldo Berjalan":formatRupiah(saldo)}; }));
-    let wb=XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb,ws,"Laporan");
-    XLSX.writeFile(wb,"laporan.xlsx");
+  let saldo=0;
+  let ws=XLSX.utils.json_to_sheet(data.map((d,i)=>{saldo+=(d.tipe==="pemasukan"?d.jumlah:-d.jumlah);return {No:i+1,Nama:d.nama,Jumlah:formatRupiah(d.jumlah),Tipe:d.tipe};}));
+  let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Laporan");XLSX.writeFile(wb,"laporan.xlsx");
 }
 
-function copyLink(){ navigator.clipboard.writeText(window.location.href).then(()=>{ alert("Link halaman berhasil disalin 💖"); }); }
-
-function saveAsImage(){ html2canvas(document.getElementById('mainContainer')).then(canvas=>{ const link=document.createElement('a'); link.href=canvas.toDataURL("image/png"); link.download="laporan_keuangan.png"; link.click(); }); }
+function copyLink(){navigator.clipboard.writeText(window.location.href).then(()=>alert("Link berhasil disalin 💖"));}
+function saveAsImage(){html2canvas(document.getElementById('mainContainer')).then(c=>{const link=document.createElement('a');link.href=c.toDataURL("image/png");link.download="laporan.png";link.click();});}
 
 update();
 </script>

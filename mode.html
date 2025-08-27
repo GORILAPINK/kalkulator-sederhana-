@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Menu Sweet Wallet 💖</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #ffe6f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  color: #e75480;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+/* Container tombol */
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Tombol */
+button {
+  padding: 12px 25px;
+  border-radius: 15px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff69b4, #e75480);
+  color: #fff;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #e75480, #ff69b4);
+}
+
+/* Responsif */
+@media(max-width:768px){
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  button {
+    width: 200px;
+  }
+}
+</style>
+</head>
+<body>
+<h1>💖 Pilih Mode Tampilan 💖</h1>
+
+<div class="button-container">
+  <button onclick="window.location.href='beranda.html'">📱 Portrait</button>
+  <button onclick="window.location.href='dasboard.html'">💻 Landscape</button>
+</div>
+
+</body>
+</html>

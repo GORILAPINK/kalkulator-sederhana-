@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Sikalem 💖</title>
+<title>💖 Sweet Wallet Desktop 💖</title>
 
 <!-- Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,55 +20,46 @@ body {
   margin:0;
   padding:0;
   color:#333;
+}
+
+/* Footer di atas */
+footer {
+  background:#ff69b4;
+  color:#fff;
+  padding:10px;
+  font-family:'Pacifico',cursive;
+  font-size:14px;
+  border-radius:12px 12px 0 0;
+  margin:10px 20px;
   text-align:center;
 }
 
-h1 {
-  font-family:'Pacifico',cursive;
-  color:#e75480;
-  font-size:1.8em;
-  margin:12px 0;
-}
-
+/* Container desktop */
 .container {
-  max-width:400px;
-  margin:auto;
+  display:flex;
+  max-width:1000px;
+  margin:20px auto;
   background:pink;
   border-radius:15px;
   padding:12px;
   box-shadow:0 4px 12px rgba(231,84,128,0.3);
 }
 
-/* Form Input */
-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap:6px;
-  margin-bottom:6px;
+/* Sidebar kiri */
+.sidebar {
+  flex:1;
+  max-width:250px;
+  margin-right:12px;
 }
-form input {
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #e75480;
-  font-size:14px;
-}
-form button {
-  padding:6px;
-  border-radius:8px;
-  border:none;
-  background:linear-gradient(45deg,#ff69b4,#e75480);
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-  transition:.3s;
-  font-size:14px;
-}
-form button:hover {
-  transform:scale(1.05);
-  background:linear-gradient(45deg,#e75480,#ff69b4);
+.sidebar h1 {
+  font-family:'Pacifico',cursive;
+  color:#e75480;
+  font-size:1.8em;
+  margin:12px 0;
+  text-align:center;
 }
 
-/* Ringkasan 2x2 */
+/* Summary Box */
 .summary {
   display:grid;
   grid-template-columns: repeat(2,1fr);
@@ -83,6 +74,7 @@ form button:hover {
   font-size:12px;
   font-weight:bold;
   box-shadow:0 2px 5px rgba(231,84,128,0.4);
+  text-align:center;
 }
 .summary-box button {
   padding:2px 4px;
@@ -90,7 +82,42 @@ form button:hover {
   margin-top:4px;
 }
 
-/* Grafik & Tabel */
+/* Main content kanan */
+.main-content {
+  flex:2;
+}
+
+/* Form input */
+.form-input {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px;
+  margin-bottom:6px;
+}
+.form-input input {
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #e75480;
+  font-size:14px;
+}
+.form-input button {
+  padding:6px;
+  border-radius:8px;
+  border:none;
+  background:linear-gradient(45deg,#ff69b4,#e75480);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+  font-size:14px;
+}
+.form-input button:hover {
+  transform:scale(1.05);
+  background:linear-gradient(45deg,#e75480,#ff69b4);
+}
+
+/* Section container */
 .section-container {
   display:flex;
   flex-direction:column;
@@ -103,6 +130,8 @@ form button:hover {
   padding:8px;
   box-shadow:0 2px 5px rgba(231,84,128,0.2);
 }
+
+/* Table responsive */
 .table-wrapper {
   width:100%;
   overflow-x:auto;
@@ -116,16 +145,15 @@ th,td {
   padding:4px;
   text-align:center;
 }
-th {
-  background:#ff69b4;
-  color:#fff;
-}
+th {background:#ff69b4;color:#fff;}
 tr:nth-child(even){background:#ffe6f2;}
-canvas {width:100%!important;height:150px!important;}
 
-/* Tombol 2 atas + 4 bawah */
+/* Chart */
+canvas {width:100%!important;height:200px!important;}
+
+/* Tombol */
 .btn-group {
-  display: grid;
+  display:grid;
   gap:6px;
   margin-top:8px;
 }
@@ -147,7 +175,7 @@ canvas {width:100%!important;height:150px!important;}
 }
 .btn-group button.shareimage {background:#8b0000;color:#fff;}
 
-/* Tombol Aksi tabel */
+/* Tombol tabel */
 .tabel-btn {
   padding:3px 6px;
   border:none;
@@ -160,17 +188,6 @@ canvas {width:100%!important;height:150px!important;}
 .tabel-btn.edit {background:#ff69b4;color:#fff;}
 .tabel-btn.hapus {background:#ffb6c1;color:#fff;}
 .tabel-btn.edit:hover,.tabel-btn.hapus:hover {background:#e75480;}
-
-/* Footer */
-footer {
-  background:#ff69b4;
-  color:#fff;
-  padding:10px;
-  font-family:'Pacifico',cursive;
-  font-size:12px;
-  margin-top:15px;
-  border-radius:12px 12px 0 0;
-}
 
 /* Notifikasi Copy */
 #notif {
@@ -191,74 +208,81 @@ footer {
 }
 
 /* Responsif */
+@media(max-width:1024px){
+  .container {flex-direction:column;}
+  .sidebar {margin-right:0;max-width:100%;}
+}
 @media(max-width:420px){
-  .container {padding:10px;}
-  h1 {font-size:1.6em;}
-  form input, form button {font-size:13px; padding:6px;}
+  .form-input input, .form-input button {font-size:13px; padding:6px;}
   .summary-box {font-size:11px;}
   table,th,td {font-size:10px; padding:3px;}
-  canvas {height:120px!important;}
+  canvas {height:150px!important;}
 }
 </style>
 </head>
 
 <body>
+<footer>💖 Sweet Wallet Desktop 💖</footer>
+
 <div class="container" id="mainContainer">
-  <h1>💖 Sikalem 💖</h1>
-
-  <!-- Form Input -->
-  <form id="form">
-    <input type="text" id="nama" placeholder="Nama Transaksi" required>
-    <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
-    <button type="button" onclick="tambah('pemasukan')">+ Pemasukan</button>
-    <button type="button" onclick="tambah('pengeluaran')">- Pengeluaran</button>
-  </form>
-
-  <!-- Ringkasan -->
-  <div class="summary">
-    <div class="summary-box">💵 Pemasukan: <span id="totalPemasukan">Rp 0</span></div>
-    <div class="summary-box">💸 Pengeluaran: <span id="totalPengeluaran">Rp 0</span></div>
-    <div class="summary-box">💰 Sisa: <span id="uangSisa">Rp 0</span></div>
-    <div class="summary-box">🏦 Tabungan <br><button onclick="window.location.href='tabungan.html'">langganan 💖</button></div>
+  <!-- Sidebar kiri -->
+  <div class="sidebar">
+    <h1>💖 Sweet Wallet 💖</h1>
+    <div class="summary">
+      <div class="summary-box">💵 Pemasukan: <span id="totalPemasukan">Rp 0</span></div>
+      <div class="summary-box">💸 Pengeluaran: <span id="totalPengeluaran">Rp 0</span></div>
+      <div class="summary-box">💰 Sisa: <span id="uangSisa">Rp 0</span></div>
+      <div class="summary-box">🏦 Tabungan <br><button onclick="window.location.href='tabungan.html'">langganan 💖</button></div>
+    </div>
   </div>
 
-  <!-- Grafik & Tabel -->
-  <div class="section-container">
-    <div class="section-box">
-      <div id="catatan" style="font-weight:600;color:#e75480;margin-bottom:3px;"></div>
-      <canvas id="grafik"></canvas>
-    </div>
-    <div class="section-box">
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr><th>No</th><th>Nama</th><th>Jumlah</th><th>Tipe</th><th>Aksi</th></tr>
-          </thead>
-          <tbody id="tabel-body"></tbody>
-        </table>
+  <!-- Main content kanan -->
+  <div class="main-content">
+    <div class="section-container">
+      <!-- Form input di atas tabel -->
+      <div class="section-box form-input">
+        <input type="text" id="nama" placeholder="Nama Transaksi" required>
+        <input type="number" id="jumlah" placeholder="Jumlah (Rp)" required>
+        <button type="button" onclick="tambah('pemasukan')">+ Pemasukan</button>
+        <button type="button" onclick="tambah('pengeluaran')">- Pengeluaran</button>
+      </div>
+
+      <!-- Catatan & Grafik -->
+      <div class="section-box">
+        <div id="catatan" style="font-weight:600;color:#e75480;margin-bottom:3px;"></div>
+        <canvas id="grafik"></canvas>
+      </div>
+
+      <!-- Tabel -->
+      <div class="section-box">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>No</th><th>Nama</th><th>Jumlah</th><th>Tipe</th><th>Aksi</th></tr>
+            </thead>
+            <tbody id="tabel-body"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Tombol Rating, Keluar, Ekspor -->
-  <div class="btn-group">
-    <div class="top-row">
-      <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScCZyvDNLlInoZhQbnXtbAOygswTLThcjitfgg1key-1pZ_TA/viewform?usp=header')">💖 Kasih Rating 💖</button>
-      <button onclick="window.location.href='index.html'">🚪 Keluar</button>
-    </div>
-    <div class="bottom-row">
-      <button onclick="downloadPDF()">📄 PDF</button>
-      <button onclick="downloadExcel()">📊 Excel</button>
-      <button class="shareimage" onclick="copyLink()">🔗 Copy Link</button>
-      <button class="shareimage" onclick="saveAsImage()">🖼️ Simpan Gambar</button>
+    <!-- Tombol -->
+    <div class="btn-group">
+      <div class="top-row">
+        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScCZyvDNLlInoZhQbnXtbAOygswTLThcjitfgg1key-1pZ_TA/viewform?usp=header')">💖 Kasih Rating 💖</button>
+        <button onclick="window.location.href='index.html'">🚪 Keluar</button>
+      </div>
+      <div class="bottom-row">
+        <button onclick="downloadPDF()">📄 PDF</button>
+        <button onclick="downloadExcel()">📊 Excel</button>
+        <button class="shareimage" onclick="copyLink()">🔗 Copy Link</button>
+        <button class="shareimage" onclick="saveAsImage()">🖼️ Simpan Gambar</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Notifikasi Copy -->
 <div id="notif">Link berhasil disalin 💖</div>
-
-<footer>💖 Sweet Wallet Compact 💖</footer>
 
 <script>
 let data=[];
@@ -276,7 +300,8 @@ function tambah(tipe){
   const jumlah=parseInt(document.getElementById('jumlah').value);
   if(!nama||isNaN(jumlah)){alert("Isi nama dan jumlah dulu ya sayangku💖");return;}
   data.push({nama,jumlah,tipe});
-  document.getElementById('form').reset();
+  document.getElementById('nama').value="";
+  document.getElementById('jumlah').value="";
   update();
 }
 
@@ -306,7 +331,7 @@ function update(){
   chart.data.datasets[0].data=data.map((d,i)=>data.slice(0,i+1).reduce((sum,v)=>sum+(v.tipe==="pemasukan"?v.jumlah:-v.jumlah),0));
   chart.update();
 
-  document.getElementById('catatan').innerText=pemasukan>pengeluaran?"💕 Jangan lupa di tabung sayangku💕":(pengeluaran>pemasukan?"💔 boros banget sih sayang 💔":"💗 mulai kelola yang Cermat sayangku 💗");
+  document.getElementById('catatan').innerText=pemasukan>pengeluaran?"💕 Jangan lupa di tabung sayangku💕":(pengeluaran>pemasukan?"💔 Boros banget 💔":"💗 Mulai kelola yang cermat 💗");
 }
 
 function editRow(btn,index){
@@ -353,12 +378,20 @@ function downloadExcel(){
 function copyLink(){
   navigator.clipboard.writeText(window.location.href).then(()=>{
     const notif=document.getElementById('notif');
-    notif.style.display="block";notif.style.opacity="1";
+    notif.style.display="block";
+    notif.style.opacity="1";
     setTimeout(()=>{notif.style.opacity="0";setTimeout(()=>{notif.style.display="none";},500);},2000);
   });
 }
 
-function saveAsImage(){html2canvas(document.getElementById('mainContainer')).then(c=>{const link=document.createElement('a');link.href=c.toDataURL("image/png");link.download="laporan.png";link.click();});}
+function saveAsImage(){
+  html2canvas(document.getElementById('mainContainer')).then(c=>{
+    const link=document.createElement('a');
+    link.href=c.toDataURL("image/png");
+    link.download="laporan.png";
+    link.click();
+  });
+}
 
 update();
 </script>
